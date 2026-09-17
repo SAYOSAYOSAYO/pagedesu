@@ -1,0 +1,24 @@
+<div id="school_ranking_block"></div>
+
+<script>
+  const GAS_URL = "https://script.google.com/macros/s/AKfycbxmcBEQmcicHvBMEzf9bUNDizoqEWbGuuNi5djJGR5Jm2ouveV0tXefidCdtdnNDRl_Jw/exec";
+  const SHEET_ID = "1wLF-7cR0STsscpyXDxIhUFUpCw6PYuBPuqJ6RzVE7l8";
+  const SHEET_NAME = "大学ランキングHTML";
+  const CELL = "I2";
+
+  fetch(
+    `${GAS_URL}?sheetId=${encodeURIComponent(SHEET_ID)}&sheet=${encodeURIComponent(SHEET_NAME)}&cell=${encodeURIComponent(CELL)}`
+  )
+    .then((res) => {
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      return res.text();
+    })
+    .then((html) => {
+      document.getElementById("school_ranking_block").innerHTML = html;
+    })
+    .catch((err) => {
+      console.error(err);
+      document.getElementById("school_ranking_block").innerHTML =
+        '<div style="padding:16px; color:#b42318;">ランキングの取得に失敗しました</div>';
+    });
+</script>
